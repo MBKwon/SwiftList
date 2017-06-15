@@ -16,7 +16,10 @@ protocol NumericType {
     static func *(lhs: Self, rhs: Self) -> Self
     static func /(lhs: Self, rhs: Self) -> Self
     static func %(lhs: Self, rhs: Self) -> Self
+    
     init(_ v: Int)
+    init(_ v: Float)
+    init(_ v: Double)
 }
 
 extension Double : NumericType {}
@@ -60,13 +63,13 @@ extension myList {
         
         switch self {
         case .Nil:
-            return T(1)
+            return T(1.0)
             
         case .Cons(head: let a, tail: let b):
             return a * product(ds: b) as! T
             
         default:
-            return T(1)
+            return T(1.0)
         }
     }
     
