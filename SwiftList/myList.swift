@@ -107,6 +107,45 @@ extension myList {
             return .Cons(x, xs)
         }
     }
+    
+    func getTail<T>(list: myList<T>) -> myList<T> {
+        
+        switch list {
+        case .Nil:
+            return .Nil
+            
+        case let .Cons(_, xs):
+            return xs
+        }
+    }
+}
+
+extension myList {
+    
+    func drop<T>(count: Int, list: myList<T>) -> myList<T> {
+        
+        switch count {
+        case 0:
+            return list
+            
+        default:
+            return drop(count: count-1, list: getTail(list: list))
+        }
+    }
+    
+    func dropWhile<T>(list: myList<T>, f: (T) -> Bool) -> myList<T> {
+        
+        switch list {
+        case let .Cons(x, xs):
+            if f(x) {
+                return dropWhile(list: xs, f: f)
+            }
+            fallthrough
+            
+        default:
+            return list
+        }
+    }
 }
 
 
