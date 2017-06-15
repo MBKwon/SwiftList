@@ -17,3 +17,4 @@ print(list.getHead(list: list))
 print(list.getTail(list: list))
 print(list.drop(count: 3, list: list))
 print(list.dropWhile(list: list, f: { $0 < 3 }))
+
