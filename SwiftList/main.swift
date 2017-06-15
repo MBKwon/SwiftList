@@ -39,7 +39,7 @@ extension UInt64 : NumericType {}
 
 indirect enum myList <A: NumericType> {
     case Nil
-    case Cons(head: A, tail: myList<A>)
+    case Cons(A, myList<A>)
 }
 
 
@@ -47,29 +47,23 @@ extension myList {
     
     func sum<T: NumericType>(ints: myList<T>) -> T {
         
-        switch self {
+        switch ints {
         case .Nil:
             return T(0)
             
-        case .Cons(head: let a, tail: let b):
-            return a + sum(ints: b) as! T
-            
-        default:
-            return T(0)
+        case let .Cons(x, xs):
+            return x + sum(ints: xs) 
         }
     }
     
     func product<T: NumericType>(ds: myList<T>) -> T {
         
-        switch self {
+        switch ds {
         case .Nil:
             return T(1.0)
             
-        case .Cons(head: let a, tail: let b):
-            return a * product(ds: b) as! T
-            
-        default:
-            return T(1.0)
+        case let .Cons(x, xs):
+            return x * product(ds: xs)
         }
     }
     
@@ -96,6 +90,19 @@ extension myList {
             }
             
             return .Nil
+        }
+    }
+}
+
+extension myList {
+    func getHead<T>(list: myList<T>) -> myList<T> {
+        
+        switch list {
+        case .Nil:
+            return .Nil
+            
+        case let .Cons(x, xs):
+            return .Cons(x, xs)
         }
     }
 }
