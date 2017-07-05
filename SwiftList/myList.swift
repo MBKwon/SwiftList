@@ -9,7 +9,7 @@
 import Foundation
 
 
-indirect enum myList <A: NumericType> {
+indirect enum myList <A> {
     case Nil
     case Cons(A, myList<A>)
 }
@@ -70,7 +70,7 @@ extension myList {
 }
 
 extension myList {
-    func getHead<T>(list: myList<T>) -> myList<T> {
+    func getHead<T>(_ list: myList<T>) -> myList<T> {
         
         switch list {
         case .Nil:
@@ -81,7 +81,7 @@ extension myList {
         }
     }
     
-    func getTail<T>(list: myList<T>) -> myList<T> {
+    func getTail<T>(_ list: myList<T>) -> myList<T> {
         
         switch list {
         case .Nil:
@@ -102,7 +102,7 @@ extension myList {
             return list
             
         default:
-            return drop(count: count-1, list: getTail(list: list))
+            return drop(count: count-1, list: getTail(list))
         }
     }
     
@@ -117,6 +117,31 @@ extension myList {
             
         default:
             return list
+        }
+    }
+}
+
+extension myList {
+    
+    func foldLeft<T>(acc: T, list: myList<T>, f: (T, T) -> T) -> T {
+        
+        switch list {
+        case .Nil:
+            return acc
+            
+        case let .Cons(x, xs):
+            return foldLeft(acc: f(acc, x), list: xs, f: f)
+        }
+    }
+    
+    func foldRight<T>(acc: T, list: myList<T>, f: (T, T) -> T) -> T {
+        
+        switch list {
+        case .Nil:
+            return acc
+            
+        case let .Cons(x, xs):
+            return f(x, foldRight(acc: acc, list: xs, f: f))
         }
     }
 }
